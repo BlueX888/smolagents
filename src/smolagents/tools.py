@@ -335,7 +335,7 @@ class Tool(BaseTool):
 
                 return re.sub(pattern, replacement, source_code)
 
-            forward_source_code = forward_source_code.replace(self.name, "forward")
+            forward_source_code = re.sub(rf"^def {re.escape(self.name)}\(", "def forward(", forward_source_code)
             forward_source_code = add_self_argument(forward_source_code)
             forward_source_code = forward_source_code.replace("@tool", "").strip()
             tool_code += "\n\n" + textwrap.indent(forward_source_code, "    ")
